@@ -12,21 +12,38 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool status = false;
+  bool status;
   HelperFunctions helperFunctions = new HelperFunctions();
 
   final formKey = GlobalKey<FormState>();
 
-  loginWithGoogleMethod() {
+  saveLoggedInState() {
     try {
-      loginInWithGoogle(context);
       HelperFunctions.saveUserLoggedInSharedPreference(status);
       setState(() {
         status = true;
       });
     } catch (e) {
-      print(e.toString() + "************LOG IN FAOLED");
+      print(e.toString());
     }
+  }
+
+  loginWithGoogleMethod() {
+    try {
+      loginInWithGoogle(context);
+      saveLoggedInState();
+    } catch (e) {
+      print(e.toString() + "************LOG IN FAOLED");
+      setState(() {
+        status = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    saveLoggedInState();
+    super.initState();
   }
 
   @override

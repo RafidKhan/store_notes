@@ -28,19 +28,32 @@ class _HomePageScreenState extends State<HomePageScreen> {
       .doc(FirebaseAuth.instance.currentUser.uid)
       .collection("Notes");
 
+  saveLoggedInState() {
+    HelperFunctions.saveUserLoggedInSharedPreference(status);
+    setState(() {
+      status = false;
+    });
+  }
+
   Future signOut() {
     try {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => SplashScreen()));
+      saveLoggedInState();
 
-      HelperFunctions.saveUserLoggedInSharedPreference(status);
-      setState(() {
-        status = false;
-      });
       return auth.signOut();
     } catch (e) {
+      setState(() {
+        status = true;
+      });
       print(e.toString());
     }
+  }
+
+  @override
+  void initState() {
+    saveLoggedInState();
+    super.initState();
   }
 
   @override
@@ -136,7 +149,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         child: Column(
                           children: [
                             Align(
-                              alignment: Alignment.center,
+                              alignment: Alignment.topLeft,
                               child: Text(
                                 "${data['title']}",
                                 style: TextStyle(
@@ -144,10 +157,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 10.0,
-                            ),
-                            SizedBox(
-                              height: 10.0,
+                              height: 80.0,
                             ),
                             Align(
                               alignment: Alignment.bottomRight,

@@ -25,11 +25,11 @@ class _NoteAppState extends State<NoteApp> {
     super.initState();
   }
 
-
-  getLoggedInState() async {
-    await HelperFunctions.getUserLoggedInSharedPreference().then((value){
+  getLoggedInState() {
+    HelperFunctions.getUserLoggedInSharedPreference().then((value) {
       setState(() {
-        status  = value;
+        status = value;
+        print("####### VALUE #####" + status.toString());
       });
     });
   }
@@ -42,8 +42,7 @@ class _NoteAppState extends State<NoteApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: status==true? HomePageScreen() : SplashScreen(),
+      home: status == true ? HomePageScreen() : SplashScreen(),
     );
   }
 }
-
