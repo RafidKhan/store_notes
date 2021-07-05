@@ -25,8 +25,8 @@ class _NoteAppState extends State<NoteApp> {
     super.initState();
   }
 
-  getLoggedInState() {
-    HelperFunctions.getUserLoggedInSharedPreference().then((value) {
+  getLoggedInState() async{
+    await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
       setState(() {
         status = value;
         print("####### VALUE #####" + status.toString());

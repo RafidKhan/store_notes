@@ -157,7 +157,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 80.0,
+                              height: 50.0,
                             ),
                             Align(
                               alignment: Alignment.bottomRight,
